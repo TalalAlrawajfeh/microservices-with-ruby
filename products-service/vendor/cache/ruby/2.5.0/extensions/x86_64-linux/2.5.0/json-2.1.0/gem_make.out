@@ -1,0 +1,14 @@
+current directory: /home/talal/Development/microservices-with-ruby/products-service/vendor/cache/ruby/2.5.0/gems/json-2.1.0/ext/json
+/usr/bin/ruby -r ./siteconf20180827-23593-1jfgq1t.rb extconf.rb
+creating Makefile
+
+current directory: /home/talal/Development/microservices-with-ruby/products-service/vendor/cache/ruby/2.5.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" clean
+rm -f  *.o  *.bak mkmf.log .*.time
+
+current directory: /home/talal/Development/microservices-with-ruby/products-service/vendor/cache/ruby/2.5.0/gems/json-2.1.0/ext/json
+make "DESTDIR="
+make: Nothing to be done for 'all'.
+
+current directory: /home/talal/Development/microservices-with-ruby/products-service/vendor/cache/ruby/2.5.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" install
