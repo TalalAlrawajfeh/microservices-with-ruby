@@ -15,10 +15,12 @@ ENV PRODUCTS_SERVICE_ID=1
 RUN apt-get update &\
     apt-get upgrade
 
-COPY products-service /usr/src/app/products-service
+RUN mkdir -p /usr/src/app/products-service
+
+COPY . /usr/src/app/products-service
 WORKDIR /usr/src/app/products-service
 
-RUN rm -rf /usr/src/app/products-service/vendor
+RUN rm -rf /usr/src/app/products-service/vendor/cache
 RUN bundle install --path vendor/cache
 RUN chmod a+rwx run.sh
 
@@ -26,7 +28,3 @@ EXPOSE ${SINATRA_PORT}/tcp
 
 CMD ["run.sh"]
 
-# docker build -t products-service .
-# docker run -d products-service
-# docker inspect <container-id> to see the ip address
-# curl -X GET http://172.17.0.3:5000/product
