@@ -72,7 +72,7 @@ docker run -e DATABASE_HOST=$E_DATABASE_HOST \
            -e DATABASE_USERNAME=root \
            -e DATABASE_PASSWORD=$ROOT_PASSWORD \
            -e CONSUL_URL=http://$CONSUL_HOST:8500 \
-           -e PRODUCTS_SERVICE_ID=1 \
+           -e SERVICE_ID=1 \
            -d products-service
 
 # to run other instances just increment PRODUCTS_SERVICE_ID each time
@@ -80,5 +80,5 @@ docker run -e DATABASE_HOST=$E_DATABASE_HOST \
 #            -e DATABASE_USERNAME=root \
 #            -e DATABASE_PASSWORD=$ROOT_PASSWORD \
 #            -e CONSUL_URL=http://$CONSUL_HOST:8500 \
-#            -e PRODUCTS_SERVICE_ID=2 \
+#            -e SERVICE_ID=2 \
 #            -d products-service

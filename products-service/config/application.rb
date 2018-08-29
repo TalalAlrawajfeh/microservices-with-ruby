@@ -16,7 +16,7 @@ set :root, Dir['./app']
 ip_address = Socket.ip_address_list.find { |ai| ai.ipv4? && !ai.ipv4_loopback? }.ip_address
 
 request = {
-  'ID' => 'products-service-' + ENV['PRODUCTS_SERVICE_ID'],
+  'ID' => 'products-service-' + ENV['SERVICE_ID'],
   'Name' => 'products-service',
   'Address' => ip_address,
   'Port' => ENV['SINATRA_PORT'].to_i,
