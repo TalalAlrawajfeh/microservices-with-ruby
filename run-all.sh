@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+#
+# mysql database setup
+#
+
 ROOT_PASSWORD="root"
 
 # kill running docker containers
@@ -31,9 +36,37 @@ E_DATABASE_HOST=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAdd
 docker exec -it test-container mysql --user=root --password=$ROOT_PASSWORD --execute="CREATE DATABASE productsdb;"
 docker exec -it test-container mysql --user=root --password=$ROOT_PASSWORD --execute="ALTER USER root IDENTIFIED WITH mysql_native_password BY '$ROOT_PASSWORD';"
 
+
+#
+# consul setup
+#
+
+# pull the consul image
+docker pull consul
+
+# run an instance of consul in a docker container
+CONSUL_ID=$(docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul)
+CONSUL_HOST=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" $CONSUL_ID)
+
+# wait for consul to start
+while true
+do
+    leader_ip=$(curl -X GET http://$CONSUL_HOST:8500/v1/status/leader)
+    if [[ ! -z $leader_ip ]]
+    then
+        break
+    fi
+done
+
+
+#
+# products-service setup
+#
+
 # build and run our service
 docker build -t products-service .
 docker run -e DATABASE_HOST=$E_DATABASE_HOST \
            -e DATABASE_USERNAME=root \
            -e DATABASE_PASSWORD=$ROOT_PASSWORD \
+           -e CONSUL_URL=http://$CONSUL_HOST:8500 \
            -d products-service

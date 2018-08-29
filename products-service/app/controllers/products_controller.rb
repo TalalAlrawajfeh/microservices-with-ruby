@@ -2,7 +2,8 @@ require 'sinatra'
 require 'json'
 
 get '/' do
-    'Hello from ProductsService'
+    status 200
+    body ''
 end
 
 get '/product' do
