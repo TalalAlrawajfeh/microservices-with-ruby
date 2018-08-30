@@ -128,7 +128,7 @@ echo 'end'  >> sample_controller.rb
 cd ../..
 
 echo 'FROM ruby:latest' > Dockerfile
-echo '' > Dockerfile
+echo '' >> Dockerfile
 echo 'LABEL maintainer="talal@bluekangaroo.co"' >> Dockerfile
 echo '' >> Dockerfile
 echo '# these are default values, to override them run docker with flag -e VARNAME=varvalue' >> Dockerfile
@@ -156,3 +156,25 @@ echo ''  >> Dockerfile
 echo 'EXPOSE ${SINATRA_PORT}/tcp'  >> Dockerfile
 echo ''  >> Dockerfile
 echo 'CMD ["run.sh"]'  >> Dockerfile
+
+cd ..
+
+echo '' >> run-all.sh
+echo '' >> run-all.sh
+echo '#' >> run-all.sh 
+echo '# '$service_name' setup' >> run-all.sh
+echo '#' >> run-all.sh
+echo '' >> run-all.sh
+echo 'docker exec -it test-container mysql --user=root --password=$ROOT_PASSWORD --execute="CREATE DATABASE '$database_name';"'  >> run-all.sh
+echo ''  >> run-all.sh
+echo 'cd '$service_name  >> run-all.sh
+echo 'docker build -t '$service_name' .'  >> run-all.sh
+echo 'cd ..'  >> run-all.sh
+echo ''  >> run-all.sh
+echo 'docker run -e DATABASE_HOST=$E_DATABASE_HOST \' >> run-all.sh
+echo '           -e DATABASE_USERNAME=root \' >> run-all.sh
+echo '           -e DATABASE_PASSWORD=$ROOT_PASSWORD \' >> run-all.sh
+echo '           -e CONSUL_URL=http://$CONSUL_HOST:8500 \' >> run-all.sh
+echo '           -e SERVICE_ID=1 \' >> run-all.sh
+echo '           -d '$service_name >> run-all.sh
+
