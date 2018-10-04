@@ -100,3 +100,21 @@ docker run -e DATABASE_HOST=$E_DATABASE_HOST \
            -e CONSUL_URL=http://$CONSUL_HOST:8500 \
            -e SERVICE_ID=1 \
            -d receipts-service
+
+
+#
+# api-gateway setup
+#
+
+docker exec -it test-container mysql --user=root --password=$ROOT_PASSWORD --execute="CREATE DATABASE apigatewaydb;"
+
+cd api-gateway
+docker build -t api-gateway .
+cd ..
+
+docker run -e DATABASE_HOST=$E_DATABASE_HOST \
+           -e DATABASE_USERNAME=root \
+           -e DATABASE_PASSWORD=$ROOT_PASSWORD \
+           -e CONSUL_URL=http://$CONSUL_HOST:8500 \
+           -e SERVICE_ID=1 \
+           -d api-gateway
